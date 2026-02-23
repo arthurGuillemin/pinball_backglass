@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
-import { screensSocket } from "../services/socket";
+import { connectSocket, onScreenMessage } from "../services/socket";
 
 export default function ScoreDisplay() {
-  const [score, setScore] = useState(10);
+  const [score, setScore] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
-    screensSocket.connect();
+    connectSocket();
 
-    screensSocket.on("state_update", (state) => {
-      setScore(state.score);
+    onScreenMessage((data) => {
+      if (data.type === "state_update") {
+        setScore(data.state.score);
+      }
+      if (data.type === "game_over") {
+        setGameOver(true);
+      }
     });
-
-    return () => {
-      screensSocket.off("state_update");
-      screensSocket.disconnect();
-    };
   }, []);
 
   return (
@@ -35,6 +36,9 @@ export default function ScoreDisplay() {
       >
         {score}
       </p>
+      {gameOver && (
+        <p style={{ color: "red", fontSize: 48, marginTop: 20 }}>GAME OVER</p>
+      )}
     </div>
   );
 }

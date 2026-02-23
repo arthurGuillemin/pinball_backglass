@@ -1,7 +1,21 @@
-import { io } from "socket.io-client";
+const SCREENS_URL = "ws://localhost:3000/screens";
 
-const URL = import.meta.env.VITE_SERVER_URL || "http://localhost:3000";
+let ws = null;
+const callbacks = [];
 
-export const screensSocket = io(`${URL}/screens`, {
-  autoConnect: false,
-});
+export const connectSocket = () => {
+  ws = new WebSocket(SCREENS_URL);
+
+  ws.onopen = () => console.log("[Screens] connecte au socket");
+  ws.onclose = () => console.log("[Screens] dfeco du socket");
+  ws.onerror = (e) => console.error("[Screens] Erreur", e);
+
+  ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    callbacks.forEach((cb) => cb(data));
+  };
+};
+
+export const onScreenMessage = (callback) => {
+  callbacks.push(callback);
+};
