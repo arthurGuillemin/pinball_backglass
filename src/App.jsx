@@ -1,10 +1,8 @@
-import { useState } from 'react'
+import Backglass from "./components/Backglass";
+import "./style/backglass.css";
 
 function App() {
-  return (
-    <>
-    </>
-  )
+  return <Backglass />;
 }
 
-export default App
+export default App;
