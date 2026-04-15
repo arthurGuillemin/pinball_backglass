@@ -1,8 +1,8 @@
-import Backglass from "./components/Backglass";
-import "./style/backglass.css";
+import DuelDiceKing from "./pages/DuelDiceKing";
+import "./style/DuelDiceKing.css";
 
 function App() {
-  return <Backglass />;
+  return <DuelDiceKing />;
 }
 
 export default App;
