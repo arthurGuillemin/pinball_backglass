@@ -1,23 +1,4 @@
-.backglass {
-  width: 100vw;
-  height: 100vh;
-  background: radial-gradient(circle at center, #1a1a1a, #000);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+html, body {
+  margin: 0;
   overflow: hidden;
-}
-
-.cuphead-sprite {
-  width: 350px;
-  image-rendering: pixelated;
-
-  animation: float 0.8s infinite ease-in-out;
-  filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.6));
-}
-
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
-  100% { transform: translateY(0px); }
 }

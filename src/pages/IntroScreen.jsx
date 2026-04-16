@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useSpriteLoop } from "../hooks/useSpriteLoop";
 
+
 const animationFrames = Array.from({ length: 34 }, (_, i) =>
   `/assets/IntroScreen/Cuphead & Mugman/cuphead_title_screen_${String(i + 1).padStart(4, "0")}.png`
 );
@@ -34,9 +35,8 @@ export default function IntroScreen() {
 
 
       <div className="press-any-button">
-        PRESS ANY BUTTON
+        Press Any Button
        </div>
-
     </div>
   );
 }
