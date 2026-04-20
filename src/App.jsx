@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import IntroScreen from "./pages/IntroScreen";
 import VideoScreen from "./pages/RunNGun";
 import DuelDiceKing from "./pages/DuelDiceKing";
+import Result from "./pages/Result";
+
 import "./style/IntroScreen.css";
 import "./style/RunNGun.css";
 import "./App.css";
@@ -19,6 +21,12 @@ function App() {
       if (e.code === "KeyK") {
         setScreen("duel");
       }
+      if (e.code === "KeyX") {
+        setScreen("video");
+      }
+      if (e.code === "KeyR") {
+        setScreen("result");
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -31,6 +39,7 @@ function App() {
       {screen === "intro" && <IntroScreen />}
       {screen === "video" && <VideoScreen />}
       {screen === "duel" && <DuelDiceKing />}      
+      {screen === "result" && <Result />}
     </>
   );
 }
