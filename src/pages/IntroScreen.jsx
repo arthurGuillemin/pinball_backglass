@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { useSpriteLoop } from "../hooks/useSpriteLoop";
+import LeaderBoard from "../components/LeaderBord";
 
 
 const animationFrames = Array.from({ length: 34 }, (_, i) =>
@@ -33,6 +34,7 @@ export default function IntroScreen() {
         className="intro-animation"
       />
 
+      <LeaderBoard/>
 
       <div className="press-any-button">
         Press Any Button
