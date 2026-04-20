@@ -8,7 +8,7 @@ const cupheadFrames = Array.from({ length: 16 }, (_, i) =>
 export default function CupheadRun() {
   const cupheadRef = useRef(null);
 
-  useSpriteLoop(cupheadFrames, 30, cupheadRef);
+  useSpriteLoop(cupheadFrames, 10, cupheadRef);
 
   return (
     <img

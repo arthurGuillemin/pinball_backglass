@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect} from "react";
 import { useSpriteLoop } from "../hooks/useSpriteLoop";
 
 
@@ -14,35 +14,33 @@ const diceIdleFrames = Array.from({ length: 33 }, (_, i) =>
   `/assets/DiceKing/idle/boss-battle-kingdice-idle_${String(i + 1).padStart(4, "0")}.png`
 );
 
-export default function DiceKingIntro() {
+export default function DiceKingIntro({ onAction }) {
   const diceRef = useRef(null);
 
   const [phase, setPhase] = useState("hands");
-  
-  const currentFrames = 
-    phase === "hands" ? 
-    diceHandsFrames 
-    : phase === "intro"
-    ? diceIntroFrames
-    : diceIdleFrames;
+
+    const frames =
+        phase === "hands"
+            ? diceHandsFrames
+            : phase === "intro"
+            ? diceIntroFrames
+            : diceIdleFrames;
+
 
   useSpriteLoop(
-    currentFrames,
+    frames,
     35,
     diceRef,
     phase === "idle",
     () => {
-        if (phase === "hands") {
-            setPhase("intro");
-        } else if (phase === "intro") {
-            setPhase("idle");
+        if (phase === "hands")  return  setPhase("intro");
+        if (phase === "intro") return setPhase("idle");
         }
-    }
     );
 
   return (
       <img ref={diceRef} 
       className={`dice ${phase === "hands" ? "hands" : ""}`}
-      src={currentFrames[0]} />
+      src={frames[0]} />
   );
 }

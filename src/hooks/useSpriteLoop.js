@@ -4,6 +4,8 @@ export function useSpriteLoop(frames, fps = 10, imgRef, loop = true, onComplete 
   const index = useRef(0);
   const last = useRef(0);
 
+  const rafId = useRef(null);
+
   useEffect(() => {
     function loopFn(time) {
       const interval = 1000 / fps;
