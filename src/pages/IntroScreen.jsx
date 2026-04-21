@@ -1,20 +1,29 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useSpriteLoop } from "../hooks/useSpriteLoop";
 import LeaderBoard from "../components/LeaderBord";
-
 
 const animationFrames = Array.from({ length: 34 }, (_, i) =>
   `/assets/IntroScreen/Cuphead & Mugman/cuphead_title_screen_${String(i + 1).padStart(4, "0")}.png`
 );
 
-export default function IntroScreen() {
+export default function IntroScreen({ onStart }) {
   const animRef = useRef(null);
 
-  useSpriteLoop( animationFrames, 20, animRef, true );
+  useSpriteLoop(animationFrames, 20, animRef, true);
+
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.key !== "F5" && e.key !== "F12") {
+        onStart();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, [onStart]);
 
   return (
     <div className="intro-container">
-
       <img
         src="/assets/IntroScreen/title_screen_background.png"
         alt="background"
