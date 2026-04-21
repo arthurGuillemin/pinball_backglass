@@ -15,30 +15,32 @@ export default function CupheadRun() {
 
   useSpriteLoop(
     isJumping ? cupheadJumpFrames : cupheadFrames,
-    isJumping ? 30 : 15,   
+    isJumping ? 30 : 15,
     cupheadRef
   );
 
-    useEffect(() => {
-      const triggerJump = () => {
-        setIsJumping(true);
+  useEffect(() => {
+    let timeout;
 
-        const jumpDuration = (cupheadJumpFrames.length / 10) * 1000;
+    const triggerJump = () => {
+      setIsJumping(true);
 
-        setTimeout(() => {
-          setIsJumping(false);
-        }, jumpDuration);
+      const jumpDuration = (cupheadJumpFrames.length / 10) * 1000;
 
-        const nextJump = Math.random() * 1000 + 500;
-        timeout = setTimeout(triggerJump, nextJump);
-      };
- 
-      let timeout = setTimeout(triggerJump, 500);
+      setTimeout(() => {
+        setIsJumping(false);
+      }, jumpDuration);
 
-      return () => clearTimeout(timeout);
-    }, []);
+      const nextJump = Math.random() * 8000 + 4000;
+      timeout = setTimeout(triggerJump, nextJump);
+    };
 
-    return (
+    timeout = setTimeout(triggerJump, 500);
+
+    return () => clearTimeout(timeout);
+  }, []);
+
+  return (
     <img
       ref={cupheadRef}
       className={`cuphead ${isJumping ? "jump" : ""}`}

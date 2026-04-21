@@ -1,12 +1,15 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import CupheadRun from "../components/CupheadRun";
-import DiceKingIntro from "../components/DiceKing";
+import DiceKingIntro from "../components/DiceKingIntro";
+import DiceKingIdle from "../components/DiceKingIdle";
 import DiceKingDefeat from "../components/DiceKingDefeat";
 import DiceKingChomp from "../components/DiceKingVictory";
 
 export default function DuelDiceKing() {
-  const [action, setAction] = useState(null);
-  const [ fadeIn, setFadeIn ] = useState(false);
+  const [phase, setPhase] = useState("intro"); 
+  // intro | idle | victory | defeat
+
+  const [fadeIn, setFadeIn] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setFadeIn(true), 100);
@@ -16,18 +19,30 @@ export default function DuelDiceKing() {
   return (
     <div className="duel-dice-king">
       <div className={`fade-overlay ${fadeIn ? "active" : ""}`} />
+
       <img className="bg" src="/assets/Bg/DiceKing/kd_bg_painting.png" />
       <img className="table" src="/assets/Bg/DiceKing/kd_bg_table.png" />
 
-      <DiceKingIntro onAction={setAction} />
-      {action === "defeat" && (
-        <DiceKingDefeat onEnd={() => setAction(null)} />
+      {phase === "intro" && (
+        <DiceKingIntro onFinish={() => setPhase("idle")} />
       )}
-      {action === "chomp" && (
-        <DiceKingChomp onEnd={() => setAction(null)} />
-        )}
-      <CupheadRun />
 
+      {phase === "idle" && (
+        <DiceKingIdle
+          onVictory={() => setPhase("victory")}
+          onDefeat={() => setPhase("defeat")}
+        />
+      )}
+
+      {phase === "victory" && (
+        <DiceKingChomp onEnd={() => setPhase("idle")} />
+      )}
+
+      {phase === "defeat" && (
+        <DiceKingDefeat onEnd={() => setPhase("idle")} />
+      )}
+
+      <CupheadRun />
     </div>
   );
 }
