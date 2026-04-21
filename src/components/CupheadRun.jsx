@@ -9,9 +9,10 @@ const cupheadJumpFrames = Array.from({ length: 8 }, (_, i) =>
   `/assets/Cuphead/Jump/cuphead_jump_${String(i + 1).padStart(4, "0")}.png`
 );
 
-export default function CupheadRun() {
+export default function CupheadRun({phase}) {
   const cupheadRef = useRef(null);
   const [isJumping, setIsJumping] = useState(false);
+  const [position, setPosition] = useState("start"); 
 
   useSpriteLoop(
     isJumping ? cupheadJumpFrames : cupheadFrames,
@@ -20,6 +21,14 @@ export default function CupheadRun() {
   );
 
   useEffect(() => {
+    if (phase === "idle") {
+      setPosition("center");
+    }
+  }, [phase]);
+
+  useEffect(() => {
+    if (position !== "center") return;
+
     let timeout;
 
     const triggerJump = () => {
@@ -35,15 +44,15 @@ export default function CupheadRun() {
       timeout = setTimeout(triggerJump, nextJump);
     };
 
-    timeout = setTimeout(triggerJump, 500);
+    timeout = setTimeout(triggerJump, 6500);
 
     return () => clearTimeout(timeout);
-  }, []);
+  }, [position]);
 
   return (
     <img
       ref={cupheadRef}
-      className={`cuphead ${isJumping ? "jump" : ""}`}
+      className={`cuphead ${isJumping ? "jump" : ""} ${position}`}
       src={cupheadFrames[0]}
       alt="cuphead"
     />

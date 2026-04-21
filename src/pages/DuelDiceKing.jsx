@@ -7,7 +7,6 @@ import DiceKingChomp from "../components/DiceKingVictory";
 
 export default function DuelDiceKing() {
   const [phase, setPhase] = useState("intro"); 
-  // intro | idle | victory | defeat
 
   const [fadeIn, setFadeIn] = useState(false);
 
@@ -17,8 +16,7 @@ export default function DuelDiceKing() {
   }, []);
 
   return (
-    <div className="duel-dice-king">
-      <div className={`fade-overlay ${fadeIn ? "active" : ""}`} />
+    <div className={`duel-dice-king ${fadeIn ? 'active' : ''}`}>
 
       <img className="bg" src="/assets/Bg/DiceKing/kd_bg_painting.png" />
       <img className="table" src="/assets/Bg/DiceKing/kd_bg_table.png" />
@@ -42,7 +40,7 @@ export default function DuelDiceKing() {
         <DiceKingDefeat onEnd={() => setPhase("idle")} />
       )}
 
-      <CupheadRun />
+      <CupheadRun phase={phase} />
     </div>
   );
 }
