@@ -57,14 +57,15 @@
   left: 50%;
   transform: translateX(-50%);
   color: #E6BB4D;
-  font-size: 45px;
+  font-size: 60px;
   font-weight: 900;
   letter-spacing: 1px;
   z-index: 10;
-  font-family: "Outfit", sans-serif;
-  -webkit-text-stroke: 3px black;
+  font-family: "Josefin Sans", sans-serif;
   animation: blink 1.5s infinite;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
+
 
 @keyframes blink {
   0%   { opacity: 1; }
