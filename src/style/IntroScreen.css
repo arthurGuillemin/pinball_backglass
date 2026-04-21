@@ -86,13 +86,15 @@
   width: 100%;
   position: relative;
   
-  background-image: url("/assets/IntroScreen/testbg1.png");
-  background-size: cover; 
+  background-image: url("/assets/IntroScreen/TEST.png");
+
   background-repeat: no-repeat;
   background-position: center;
 
   font-family: "Josefin Sans", sans-serif;
   margin-bottom: 2%;
+  
+  border:2px solid #000000;
 }
 
 .player-avatar {
@@ -100,7 +102,8 @@
   height: 66px; 
   object-fit: cover;
   flex: 0 0 auto;
-  margin-left: 5px;
+  margin-left: -2px;
+  border: 2px solid #000000;
 }
 
 
