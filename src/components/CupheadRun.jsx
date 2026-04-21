@@ -13,10 +13,9 @@ export default function CupheadRun() {
   const cupheadRef = useRef(null);
   const [isJumping, setIsJumping] = useState(false);
 
-  useSpriteLoop(cupheadFrames, 15, cupheadRef);
   useSpriteLoop(
     isJumping ? cupheadJumpFrames : cupheadFrames,
-    10,
+    isJumping ? 30 : 15,   
     cupheadRef
   );
 
@@ -24,15 +23,17 @@ export default function CupheadRun() {
       const triggerJump = () => {
         setIsJumping(true);
 
+        const jumpDuration = (cupheadJumpFrames.length / 10) * 1000;
+
         setTimeout(() => {
           setIsJumping(false);
-        }, 600);
+        }, jumpDuration);
 
-        const nextJump = Math.random() * 3000 + 1000;
+        const nextJump = Math.random() * 1000 + 500;
         timeout = setTimeout(triggerJump, nextJump);
       };
-
-      let timeout = setTimeout(triggerJump, 2000);
+ 
+      let timeout = setTimeout(triggerJump, 500);
 
       return () => clearTimeout(timeout);
     }, []);

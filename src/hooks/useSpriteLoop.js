@@ -5,14 +5,12 @@ export function useSpriteLoop(frames, fps = 10, imgRef, loop = true, onComplete 
   const last = useRef(0);
 
   const rafId = useRef(null);
-
   useEffect(() => {
     function loopFn(time) {
       const interval = 1000 / fps;
 
       if (time - last.current > interval) {
         last.current = time;
-
         index.current++;
 
         if (index.current >= frames.length) {
@@ -20,12 +18,8 @@ export function useSpriteLoop(frames, fps = 10, imgRef, loop = true, onComplete 
             index.current = 0;
           } else {
             index.current = frames.length - 1;
-
-            if (onComplete) {
-              onComplete();
-            }
-
-            return; 
+            if (onComplete) onComplete();
+            return;
           }
         }
 
@@ -34,10 +28,11 @@ export function useSpriteLoop(frames, fps = 10, imgRef, loop = true, onComplete 
         }
       }
 
-      requestAnimationFrame(loopFn);
+      rafId.current = requestAnimationFrame(loopFn);
     }
 
-    const id = requestAnimationFrame(loopFn);
-    return () => cancelAnimationFrame(id);
+    rafId.current = requestAnimationFrame(loopFn);
+
+    return () => cancelAnimationFrame(rafId.current);
   }, [frames, fps, imgRef, loop, onComplete]);
 }

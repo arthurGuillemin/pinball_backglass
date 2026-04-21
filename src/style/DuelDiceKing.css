@@ -73,13 +73,13 @@ html, body {
 }
 
 
-.cuphead {
+/* .cuphead {
   position: absolute;
   width: 90px;
   bottom: 80px;
   left: 45%;
   z-index: 3;
-}
+} */
 
 .dice-wrapper.defeat .dice-result {
   bottom: 80px;
@@ -87,4 +87,34 @@ html, body {
 
 .dice-wrapper.chomp .dice-result {
   transform: translateX(-50%) scale(1);
+}
+
+
+
+.cuphead {
+  position: absolute;
+  width: 80px;
+  bottom: 80px;
+  left: 45%;
+  z-index: 3;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.cuphead.jump {
+  animation: jump 0.8s ease-out;
+  width: 60px;
+}
+
+@keyframes jump {
+  0% {
+    transform: translateY(0);
+  }
+
+  40% {
+    transform: translateY(-140px); /* montée */
+  }
+
+  100% {
+    transform: translateY(0); /* descente */
+  }
 }
