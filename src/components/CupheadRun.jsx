@@ -9,38 +9,50 @@ const cupheadJumpFrames = Array.from({ length: 8 }, (_, i) =>
   `/assets/Cuphead/Jump/cuphead_jump_${String(i + 1).padStart(4, "0")}.png`
 );
 
-export default function CupheadRun() {
+export default function CupheadRun({phase}) {
   const cupheadRef = useRef(null);
   const [isJumping, setIsJumping] = useState(false);
+  const [position, setPosition] = useState("start"); 
 
-  useSpriteLoop(cupheadFrames, 15, cupheadRef);
   useSpriteLoop(
     isJumping ? cupheadJumpFrames : cupheadFrames,
-    10,
+    isJumping ? 30 : 15,
     cupheadRef
   );
 
-    useEffect(() => {
-      const triggerJump = () => {
-        setIsJumping(true);
+  useEffect(() => {
+    if (phase === "idle") {
+      setPosition("center");
+    }
+  }, [phase]);
 
-        setTimeout(() => {
-          setIsJumping(false);
-        }, 600);
+  useEffect(() => {
+    if (position !== "center") return;
 
-        const nextJump = Math.random() * 3000 + 1000;
-        timeout = setTimeout(triggerJump, nextJump);
-      };
+    let timeout;
 
-      let timeout = setTimeout(triggerJump, 2000);
+    const triggerJump = () => {
+      setIsJumping(true);
 
-      return () => clearTimeout(timeout);
-    }, []);
+      const jumpDuration = (cupheadJumpFrames.length / 10) * 1000;
 
-    return (
+      setTimeout(() => {
+        setIsJumping(false);
+      }, jumpDuration);
+
+      const nextJump = Math.random() * 8000 + 4000;
+      timeout = setTimeout(triggerJump, nextJump);
+    };
+
+    timeout = setTimeout(triggerJump, 6500);
+
+    return () => clearTimeout(timeout);
+  }, [position]);
+
+  return (
     <img
       ref={cupheadRef}
-      className={`cuphead ${isJumping ? "jump" : ""}`}
+      className={`cuphead ${isJumping ? "jump" : ""} ${position}`}
       src={cupheadFrames[0]}
       alt="cuphead"
     />

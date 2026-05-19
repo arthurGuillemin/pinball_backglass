@@ -57,14 +57,15 @@
   left: 50%;
   transform: translateX(-50%);
   color: #E6BB4D;
-  font-size: 45px;
+  font-size: 60px;
   font-weight: 900;
   letter-spacing: 1px;
   z-index: 10;
-  font-family: "Outfit", sans-serif;
-  -webkit-text-stroke: 3px black;
+  font-family: "Josefin Sans", sans-serif;
   animation: blink 1.5s infinite;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
+
 
 @keyframes blink {
   0%   { opacity: 1; }
@@ -85,13 +86,15 @@
   width: 100%;
   position: relative;
   
-  background-image: url("/assets/IntroScreen/testbg1.png");
-  background-size: cover; 
+  background-image: url("/assets/IntroScreen/TEST.png");
+
   background-repeat: no-repeat;
   background-position: center;
 
   font-family: "Josefin Sans", sans-serif;
   margin-bottom: 2%;
+  
+  border:2px solid #000000;
 }
 
 .player-avatar {
@@ -99,7 +102,8 @@
   height: 66px; 
   object-fit: cover;
   flex: 0 0 auto;
-  margin-left: 5px;
+  margin-left: -2px;
+  border: 2px solid #000000;
 }
 
 

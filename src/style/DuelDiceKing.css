@@ -1,6 +1,21 @@
 html, body {
   margin: 0;
   overflow: hidden;
+  background: black;
+}
+
+.duel-dice-king {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+
+  clip-path: circle(0% at 50% 50%);
+  transition: clip-path 1s ease-out;
+}
+
+.duel-dice-king.active {
+  clip-path: circle(150% at 50% 50%);
 }
 
 .backglass {
@@ -8,20 +23,6 @@ html, body {
   height: 100vh;
   position: relative;
   overflow: hidden;
-}
-
-.fade-overlay {
-  position: fixed;
-  inset: 0;
-  background: black;
-  opacity: 1;
-  pointer-events: none;
-  transition: opacity 0.8s ease;
-  z-index: 99;
-}
-
-.fade-overlay.active {
-  opacity: 0;
 }
 
 .bg {
@@ -72,19 +73,43 @@ html, body {
   transition: transform 0.5s ease;
 }
 
-
-.cuphead {
-  position: absolute;
-  width: 90px;
-  bottom: 80px;
-  left: 45%;
-  z-index: 3;
-}
-
 .dice-wrapper.defeat .dice-result {
   bottom: 80px;
 }
 
 .dice-wrapper.chomp .dice-result {
   transform: translateX(-50%) scale(1);
+}
+
+.cuphead {
+  position: absolute;
+  width: 80px;
+  bottom: 80px;
+  left: 0;
+  transform: translateX(-150%);
+  z-index: 3;
+  transition: transform 2.2s ease;
+}
+
+.cuphead.center {
+  transform: translateX(45vw); 
+}
+
+.cuphead.jump {
+  animation: jump 0.8s ease-out;
+  width: 60px;
+}
+
+@keyframes jump {
+  0% {
+    transform: translateX(45vw) translateY(0);
+  }
+
+  40% {
+    transform: translateX(45vw) translateY(-140px);
+  }
+
+  100% {
+    transform: translateX(45vw) translateY(0);
+  }
 }

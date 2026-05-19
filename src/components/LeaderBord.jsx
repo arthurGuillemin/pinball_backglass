@@ -12,7 +12,7 @@ export default function LeaderBoard() {
     }, []);
 
     useEffect(() => {
-        fetch("https://flipper-backend-app.azurewebsites.net/api/scores")
+        fetch("https://flipper-backend-app.azurewebsites.net/api/scores/leaderboard")
             .then((res) => res.json())
             .then((data) => {
                 if (data.status === "success") {
@@ -30,6 +30,12 @@ export default function LeaderBoard() {
         ["leaderboard5", "placement"],
     ];
 
+    const avatarMap = {
+        chalice: "/assets/IntroScreen/Chalice.png",
+        cuphead: "/assets/IntroScreen/Cuphead.png",
+        mugman: "/assets/IntroScreen/Mugman.png",
+    };
+
     return (
         <div className="leaderboard">
             {images.map(([name, className], index) => (
@@ -46,14 +52,17 @@ export default function LeaderBoard() {
 
                     <div className="score-row">
                         <img
-                            src="/assets/IntroScreen/testChalice.png"
+                            src={
+                                avatarMap[scores[index]?.avatar?.toLowerCase()] ||
+                                "/assets/IntroScreen/testChalice.png"
+                            }
                             alt="player"
                             className="player-avatar"
                         />
 
                         <div className="score-value">
                             <span className="player-name">
-                                {scores[index]?.player_name || "Loading..."}
+                                {scores[index]?.player_name || ""}
                             </span>
                             <span className="player-score">
                                 {scores[index]?.score || ""}
