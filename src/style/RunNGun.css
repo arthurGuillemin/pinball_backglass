@@ -21,10 +21,10 @@ body {
   left: -10%;
 }
 
-.vista {
+/* .vista {
   position: absolute;
   inset: 0;
-  background-image: url("/assets/RunNGun/lv1-1_bg_vista-landscape.png");
+  background-image: url("/assets/RunNGun/test.png");
   background-repeat: repeat-x;
   background-size: cover;
     
@@ -32,7 +32,7 @@ body {
   bottom: 0;
   left: -10%;
 
-  animation: vistaMove 60s linear infinite;
+  animation: vistaMove 10s linear infinite;
 
   z-index: 1;
 }
@@ -44,15 +44,67 @@ body {
   to {
     transform: translateX(-20%);
   }
+} */
+
+/* .vista {
+  position: absolute;
+  inset: 0;
+  background-image: url("/assets/RunNGun/eltest.png");
+  background-repeat: repeat-x;
+
+  background-size: auto 100%;
+
+  width: 300%; 
+  height: 100%;
+
+  bottom: 0;
+  left: 0;
+
+  animation: vistaMove 30s linear infinite;
+
+  z-index: 1;
 }
 
+@keyframes vistaMove {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+} */
+
+.vista {
+  position: absolute;
+  inset: 0;
+
+  background-image: url("/assets/RunNGun/eltest.png");
+  background-repeat: repeat-x;
+
+  /* garde la hauteur */
+  background-size: auto 100%;
+
+  z-index: 1;
+
+  animation: vistaMove 400s linear infinite;
+}
+
+@keyframes vistaMove {
+  from {
+    background-position-x: 0;
+  }
+
+  to {
+    background-position-x: -90000px;
+  }
+}
 .mid {
   position: absolute;
 
   left: 0;
   bottom: 0;
   width: 200%;
-  height: 15%;
+  height: 25%;
 
   background-image: url("/assets/RunNGun/lv1-1_mg_meadow-loop.png");
   background-repeat: repeat-x;
@@ -72,6 +124,47 @@ body {
     background-position-x: -1000px;
   }
 }
+/* 
+.mid-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  height: 25%;
+
+  overflow: hidden;
+
+  z-index: 3;
+}
+
+.mid-track {
+  display: flex;
+  width: max-content;
+
+  animation: midMove 9s linear infinite;
+}
+
+.mid {
+  width: 100vw;
+  height: 25vh;
+
+  flex-shrink: 0;
+
+  background-image: url("/assets/RunNGun/lv1-1_mg_meadow-loop.png");
+  background-repeat: repeat-x;
+  background-size: cover;
+}
+
+@keyframes midMove {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100vw);
+  }
+} */
 
 .cuphead {
   position: absolute;
