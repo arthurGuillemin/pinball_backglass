@@ -1,0 +1,109 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.scene {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.sky {
+  position: absolute;
+  inset: 0;
+  background-image: url("/assets/RunNGun/lv1-1_bg_sky.png");
+  width: 150%;
+  top: -3%;
+  left: -10%;
+}
+
+.vista {
+  position: absolute;
+  inset: 0;
+  background-image: url("/assets/RunNGun/lv1-1_bg_vista-landscape.png");
+  background-repeat: repeat-x;
+  background-size: cover;
+    
+  width: 150%;
+  bottom: 0;
+  left: -10%;
+
+  animation: vistaMove 60s linear infinite;
+
+  z-index: 1;
+}
+
+@keyframes vistaMove {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-20%);
+  }
+}
+
+.mid {
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+  width: 200%;
+  height: 15%;
+
+  background-image: url("/assets/RunNGun/lv1-1_mg_meadow-loop.png");
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+
+  z-index: 3;
+
+  animation: midMove 12s linear infinite;
+}
+
+@keyframes midMove {
+  from {
+    background-position-x: 0;
+  }
+
+  to {
+    background-position-x: -1000px;
+  }
+}
+
+.cuphead {
+  position: absolute;
+  width: 100px;
+  bottom: 100px;
+  left: 0;
+
+  transform: translateX(-150%);
+  transition: transform 2s ease;
+
+  z-index: 90;
+}
+
+.cuphead.center {
+  transform: translateX(45vw);
+}
+
+.cuphead.jump {
+  animation: jump 0.8s ease-out;
+  width: 60px;
+}
+
+@keyframes jump {
+  0% {
+    transform: translateX(45vw) translateY(0);
+  }
+
+  40% {
+    transform: translateX(45vw) translateY(-140px);
+  }
+
+  100% {
+    transform: translateX(45vw) translateY(0);
+  }
+}
