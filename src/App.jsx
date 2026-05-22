@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import IntroScreen from "./pages/IntroScreen";
+import SelectPlayer from "./pages/SelectPlayer";
 import VideoScreen from "./pages/RunNGun";
 import DuelDiceKing from "./pages/DuelDiceKing";
 import Result from "./pages/Result";
@@ -16,7 +17,12 @@ function App() {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.code === "Space") {
-        setScreen((prev) => (prev === "intro" ? "video" : prev));
+        setScreen((prev) => {
+          if (prev === "intro") return "select";
+          if (prev === "select") return "video";
+
+          return prev;
+        });
       }
       if (e.code === "KeyK") {
         setScreen("duel");
@@ -37,6 +43,7 @@ function App() {
   return (
     <>
       {screen === "intro" && <IntroScreen />}
+      {screen === "select" && <SelectPlayer />}
       {screen === "video" && <VideoScreen />}
       {screen === "duel" && <DuelDiceKing />}      
       {screen === "result" && <Result />}
