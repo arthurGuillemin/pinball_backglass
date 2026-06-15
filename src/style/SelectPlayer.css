@@ -1,48 +1,93 @@
 body {
   margin: 0;
   padding: 0;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
 }
 
 .select-player-screen {
   width: 100vw;
   height: 100vh;
 
-  background: white
-  ;
+  display: flex;
+
+  margin: 0;
+  padding: 0;
+
+  transition: background 0.4s;
+  z-index: 9;
+}
+
+.character-side {
+  flex: 1;
+
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: 0.3s;
+}
+
+.character-image {
+  width: 900px;
+  height: 900px;
+
+  object-fit: contain;
+  margin-top: 200px;
+}
+
+.character-side::before {
+  content: "";
+
+  position: absolute;
+
+  width: 500px;
+  height: 900px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.846) 0%,
+    rgba(255, 255, 255, 0.435) 30%,
+    rgba(255, 255, 255, 0) 50%
+  );
+
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.character-active::before {
+  opacity: 1;
+}
+
+.name-side {
+  flex: 2;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  gap: 30px;
-}
-
-.title {
-  font-size: 48px;
-  color: #222;
-
-  letter-spacing: 4px;
+  transform: translateX(-200px) scale(1.2);
 }
 
 .letters-container {
   display: flex;
-  gap: 40px;
+  margin: 5%;
+  margin-top: 30%;
 }
 
 .letter-column {
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  gap: 15px;
+  margin: 0 10px;
 }
 
 .arrow-btn {
-  width: 60px;
-  height: 60px;
+  width: 100px;
+  height: 50px;
 
   background: #f6e7c8;
 
@@ -52,23 +97,44 @@ body {
   transition: 0.2s;
 }
 
+.arrow-btn:hover {
+  transform: scale(1.05);
+}
 
 .letter-box {
   width: 100px;
   height: 140px;
 
-
-  background: #fff4dc;
+  margin: 5%;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
+  background: #fff4dc;
+
+  font-family: "Josefin Sans", sans-serif;
   font-size: 72px;
   font-weight: bold;
 }
 
 .player-name {
+  font-family: "Josefin Sans", sans-serif;
   font-size: 36px;
   font-weight: bold;
+  margin-top: 10px;
+}
+
+.intro-bg-select {
+  position: absolute;
+
+  top: -35%;
+  left: 50%;
+
+  width: 100%;
+  height: auto;
+
+  transform: translateX(-50%);
+
+  z-index: 3;
 }
