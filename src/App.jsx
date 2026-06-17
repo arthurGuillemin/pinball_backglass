@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { useBackglassGame } from "./hooks/useBackglassGame";
 
 import IntroScreen from "./pages/IntroScreen";
+import SelectPlayer from "./pages/SelectPlayer";
 import VideoScreen from "./pages/RunNGun";
 import DuelDiceKing from "./pages/DuelDiceKing";
 import Result from "./pages/Result";
@@ -77,11 +78,24 @@ function App() {
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.code === "Space")
-        setScreen((prev) => (prev === "intro" ? "video" : prev));
-      if (e.code === "KeyK") setScreen("duel");
-      if (e.code === "KeyX") setScreen("video");
-      if (e.code === "KeyR") setScreen("result");
+      if (e.code === "Space") {
+        setScreen((prev) => {
+          if (prev === "intro") return "select";
+          if (prev === "select") return "video";
+
+          return prev;
+        });
+      }
+      if (e.code === "KeyK") {
+        setScreen("duel");
+      }
+      if (e.code === "KeyX") {
+        setScreen("video");
+      }
+      if (e.code === "KeyR") {
+        setScreen("result");
+      }
+
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -90,10 +104,12 @@ function App() {
 
   return (
     <>
-      {screen === "intro" && <IntroScreen onStart={startGame} />}
-      {screen === "video" && <VideoScreen gameState={gameState} />}
-      {screen === "duel" && <DuelDiceKing gameState={gameState} />}
-      {screen === "result" && <Result gameState={gameState} />}
+      {screen === "intro" && <IntroScreen />}
+      {screen === "select" && <SelectPlayer />}
+      {screen === "video" && <VideoScreen />}
+      {screen === "duel" && <DuelDiceKing />}      
+      {screen === "result" && <Result />}
+
     </>
   );
 }
