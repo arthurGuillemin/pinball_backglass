@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useBackglassGame } from "./hooks/useBackglassGame";
+import { useMqttBackglass } from "./hooks/useMqttBackglass";
 
 import IntroScreen from "./pages/IntroScreen";
 import SelectPlayer from "./pages/SelectPlayer";
@@ -16,13 +17,15 @@ const MUSIC = {
   intro: "/sounds/leaderboard.mp3",
   duel: "/sounds/duel.mp3",
   video: "/sounds/video.mp3",
-  result : '/sounds/result.mp3'
+  result: "/sounds/result.mp3",
 };
 
 function App() {
   const { screen, setScreen, gameState, startGame } = useBackglassGame();
   const audioRef = useRef(null);
   const unlockedRef = useRef(false);
+
+  useMqttBackglass();
 
   const playMusic = (screenName) => {
     const src = MUSIC[screenName];
@@ -39,7 +42,7 @@ function App() {
     audioRef.current = audio;
 
     if (unlockedRef.current) {
-      audio.play().catch((err) => console.warn("❌ Audio bloqué :", err));
+      audio.play().catch((err) => console.warn("❌ Audio bloqué :", err));
     }
   };
 
@@ -47,13 +50,9 @@ function App() {
     const unlock = () => {
       if (unlockedRef.current) return;
       unlockedRef.current = true;
-
-      if (audioRef.current) {
-        audioRef.current
-          .play()
-          .catch((err) => console.warn("❌ Audio bloqué :", err));
-      }
-
+      audioRef.current
+        ?.play()
+        .catch((err) => console.warn("❌ Audio bloqué :", err));
       window.removeEventListener("click", unlock);
       window.removeEventListener("keydown", unlock);
       window.removeEventListener("touchstart", unlock);
@@ -78,38 +77,29 @@ function App() {
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.code === "Space") {
-        setScreen((prev) => {
-          if (prev === "intro") return "select";
-          if (prev === "select") return "video";
-
-          return prev;
-        });
-      }
-      if (e.code === "KeyK") {
-        setScreen("duel");
-      }
-      if (e.code === "KeyX") {
-        setScreen("video");
-      }
-      if (e.code === "KeyR") {
-        setScreen("result");
-      }
-
+      if (e.code === "KeyK") setScreen("duel");
+      if (e.code === "KeyX") setScreen("video");
+      if (e.code === "KeyR") setScreen("result");
     };
-
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [setScreen]);
 
+  const handleAnyButton = () => {
+    if (screen === "intro") setScreen("select");
+  };
+
+  const handleStartGame = (playerName, avatar) => {
+    startGame(playerName, avatar);
+  };
+
   return (
     <>
-      {screen === "intro" && <IntroScreen />}
-      {screen === "select" && <SelectPlayer />}
+      {screen === "intro" && <IntroScreen onAnyButton={handleAnyButton} />}
+      {screen === "select" && <SelectPlayer onStartGame={handleStartGame} />}
       {screen === "video" && <VideoScreen />}
-      {screen === "duel" && <DuelDiceKing />}      
+      {screen === "duel" && <DuelDiceKing />}
       {screen === "result" && <Result />}
-
     </>
   );
 }

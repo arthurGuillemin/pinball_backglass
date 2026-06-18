@@ -1,20 +1,26 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useSpriteLoop } from "../hooks/useSpriteLoop";
 import LeaderBoard from "../components/LeaderBord";
 
-
-const animationFrames = Array.from({ length: 34 }, (_, i) =>
-  `/assets/IntroScreen/Cuphead & Mugman/cuphead_title_screen_${String(i + 1).padStart(4, "0")}.png`
+const animationFrames = Array.from(
+  { length: 34 },
+  (_, i) =>
+    `/assets/IntroScreen/Cuphead & Mugman/cuphead_title_screen_${String(i + 1).padStart(4, "0")}.png`,
 );
 
-export default function IntroScreen() {
+export default function IntroScreen({ onAnyButton }) {
   const animRef = useRef(null);
 
-  useSpriteLoop( animationFrames, 20, animRef, true );
+  useSpriteLoop(animationFrames, 20, animRef, true);
+
+  useEffect(() => {
+    const handler = () => onAnyButton?.();
+    window.addEventListener("bg:any-button", handler);
+    return () => window.removeEventListener("bg:any-button", handler);
+  }, [onAnyButton]);
 
   return (
     <div className="intro-container">
-
       <img
         src="/assets/IntroScreen/title_screen_background.png"
         alt="background"
@@ -34,11 +40,9 @@ export default function IntroScreen() {
         className="intro-animation"
       />
 
-      <LeaderBoard/>
+      <LeaderBoard />
 
-      <div className="press-any-button">
-        Press Any Button
-       </div>
+      <div className="press-any-button">Press Any Button</div>
     </div>
   );
 }
