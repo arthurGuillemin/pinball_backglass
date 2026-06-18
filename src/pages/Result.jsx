@@ -4,12 +4,8 @@ import "../style/Results.css";
 
 import WinscreenBoard from "../components/WinscreenBoard";
 
-// const animationFrames = Array.from({ length: 14 }, (_, i) =>
-//   `/assets/Results/Cuphead/cuphead_title_screen_${String(i + 1).padStart(4, "0")}.png`
-// );
-
-const forward = Array.from({ length: 14 }, (_, i) =>
-  `/assets/Results/Cuphead/cuphead_title_screen_${String(i + 1).padStart(4, "0")}.png`
+const forward = Array.from({ length: 7 }, (_, i) =>
+  `/assets/Results/Cuphead/winscreen_ch_${String(i + 1).padStart(4, "0")}.png`
 );
 
 const backward = [...forward].slice(1, -1).reverse();
@@ -17,7 +13,7 @@ const backward = [...forward].slice(1, -1).reverse();
 const animationFrames = [...forward, ...backward];
 
 const titleFrames = Array.from({ length: 3 }, (_, i) =>
-  `/assets/Results/French/winscreen_results_title_french_${String(i + 1).padStart(4, "0")}.png`
+  `/assets/Results/French/winscreen_results_title_${String(i + 1).padStart(4, "0")}.png`
 );
 
 export default function ResultsScreen() {
@@ -25,6 +21,8 @@ export default function ResultsScreen() {
   const titleRef = useRef(null);
 
   useSpriteLoop(animationFrames, 20, animRef, true);
+
+  useSpriteLoop(titleFrames, 8, titleRef, true);
 
   return (
     <div className="results-container">
@@ -48,8 +46,7 @@ export default function ResultsScreen() {
         className="results-animation"
       />
 
-      <WinscreenBoard/>
-
+      <WinscreenBoard />
     </div>
   );
 }
