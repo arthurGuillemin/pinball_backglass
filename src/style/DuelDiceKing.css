@@ -113,3 +113,19 @@ html, body {
     transform: translateX(45vw) translateY(0);
   }
 }
+
+.fight-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  width: 100vw;
+  height: 100vh;
+
+  object-fit: contain;
+
+  z-index: 999;
+  pointer-events: none;
+}
