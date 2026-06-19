@@ -11,7 +11,8 @@ export function useBackglassGame() {
     const handleMessage = (data) => {
       console.log("[Backglass] Message reçu:", data);
       if (data.state) setGameState(data.state);
-      if (data.type === "state_update" && data.state?.isRunning) setScreen("video");
+      if (data.type === "state_update" && data.state?.isRunning)
+        setScreen("video");
       if (data.type === "game_over") setScreen("result");
     };
 
@@ -19,9 +20,12 @@ export function useBackglassGame() {
     return () => socketService.disconnect();
   }, []);
 
-  const startGame = useCallback((playerName = "Player 1") => {
-    socketService.send("start_game", { playerName });
-  }, []);
+  const startGame = useCallback(
+    (playerName = "Player 1", avatar = "cuphead") => {
+      socketService.send("start_game", { playerName, avatar });
+    },
+    [],
+  );
 
   return {
     screen,
