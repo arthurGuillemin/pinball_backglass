@@ -24,6 +24,7 @@ function App() {
   const { screen, setScreen, gameState, startGame } = useBackglassGame();
   const audioRef = useRef(null);
   const unlockedRef = useRef(false);
+  const resultTimerRef = useRef(null);
 
   useMqttBackglass();
 
@@ -73,6 +74,16 @@ function App() {
 
   useEffect(() => {
     playMusic(screen);
+    if (screen === "result") {
+      clearTimeout(resultTimerRef.current);
+      resultTimerRef.current = setTimeout(() => {
+        setScreen("intro");
+      }, 20000);
+    } else {
+      clearTimeout(resultTimerRef.current);
+    }
+
+    return () => clearTimeout(resultTimerRef.current);
   }, [screen]);
 
   useEffect(() => {
@@ -99,7 +110,9 @@ function App() {
       {screen === "select" && <SelectPlayer onStartGame={handleStartGame} />}
       {screen === "video" && <VideoScreen />}
       {screen === "duel" && <DuelDiceKing />}
-      {screen === "result" && <Result />}
+      {screen === "result" && (
+        <Result name={gameState?.currentPlayer} score={gameState?.score} />
+      )}
     </>
   );
 }
