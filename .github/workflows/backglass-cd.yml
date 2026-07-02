@@ -51,7 +51,6 @@ jobs:
     needs: lint-and-build
     runs-on: ubuntu-latest
     permissions:
-      security-events: write
       contents: write
       issues: write
       pull-requests: write
@@ -88,8 +87,12 @@ jobs:
           GIT_COMMITTER_EMAIL: "github-actions[bot]@users.noreply.github.com"
 
   build-and-push:
-    needs: release
+    needs: [release]
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+
     steps:
       - uses: actions/checkout@v4
         with:
@@ -112,9 +115,8 @@ jobs:
         with:
           images: arthurguill/pinball-backglass
           tags: |
-            type=semver,pattern={{version}},value=v${{ needs.release.outputs.new_release_version }}
-            type=semver,pattern={{major}}.{{minor}},value=v${{ needs.release.outputs.new_release_version }}
             type=raw,value=latest
+            type=sha,prefix=sha-
 
       - name: Build and Push
         uses: docker/build-push-action@v5
@@ -140,12 +142,12 @@ jobs:
 
       - name: Upload Trivy results to GitHub Security
         if: always()
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: trivy-results.sarif
 
   notify-team:
-    needs: [release, build-and-push]
+    needs: [build-and-push]
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -153,12 +155,12 @@ jobs:
         if: needs.build-and-push.result == 'success'
         run: |
           curl -H "Content-Type: application/json" \
-            -d "{\"content\": \"**Backglass : Release v${{ needs.release.outputs.new_release_version }}**\nImage Docker pushée pour amd64 + arm64\nTriggered by @${{ github.actor }}\"}" \
+            -d "{\"content\": \"**Backglass : Déploiement réussi**\nCommit: ${{ github.sha }}\nImage Docker pushée pour amd64 + arm64\nTriggered by @${{ github.actor }}\"}" \
             ${{ secrets.DISCORD_WEBHOOK }}
 
       - name: Notify failure
         if: needs.build-and-push.result == 'failure'
         run: |
           curl -H "Content-Type: application/json" \
-            -d "{\"content\": \" **Backglass : Release v${{ needs.release.outputs.new_release_version }} — Échec**\nTriggered by @${{ github.actor }}\nLogs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}" \
+            -d "{\"content\": \"**Backglass : Échec du déploiement**\nCommit: ${{ github.sha }}\nTriggered by @${{ github.actor }}\nLogs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}" \
             ${{ secrets.DISCORD_WEBHOOK }}
