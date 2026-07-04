@@ -88,6 +88,13 @@ function App() {
 
   useEffect(() => {
     const handleKeyDown = (e) => {
+      if (e.code === "Space") {
+        setScreen((prev) => {
+          if (prev === "intro") return "select";
+          if (prev === "select") return "video";
+          return prev;
+        });
+      }
       if (e.code === "KeyK") setScreen("duel");
       if (e.code === "KeyX") setScreen("video");
       if (e.code === "KeyR") setScreen("result");
@@ -103,6 +110,15 @@ function App() {
   const handleStartGame = (playerName, avatar) => {
     startGame(playerName, avatar);
   };
+
+  useEffect(() => {
+    console.log("gameState:", gameState);
+    console.log("currentPlayer:", gameState?.currentPlayer);
+  }, [gameState]);
+
+  useEffect(() => {
+    console.log("gameState complet:", JSON.stringify(gameState, null, 2));
+  }, [gameState]);
 
   return (
     <>
