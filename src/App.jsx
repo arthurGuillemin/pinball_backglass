@@ -23,7 +23,6 @@ const MUSIC = {
 function App() {
   const { screen, setScreen, gameState, startGame } = useBackglassGame();
   const audioRef = useRef(null);
-  const unlockedRef = useRef(false);
   const resultTimerRef = useRef(null);
 
   useMqttBackglass();
@@ -41,39 +40,16 @@ function App() {
     audio.loop = true;
     audio.volume = 0.6;
     audioRef.current = audio;
-
-    if (unlockedRef.current) {
-      audio.play().catch((err) => console.warn("❌ Audio bloqué :", err));
-    }
+    audio.play().catch((err) => console.warn(" Audio bloqué :", err));
   };
 
   useEffect(() => {
-    const unlock = () => {
-      if (unlockedRef.current) return;
-      unlockedRef.current = true;
-      audioRef.current
-        ?.play()
-        .catch((err) => console.warn("❌ Audio bloqué :", err));
-      window.removeEventListener("click", unlock);
-      window.removeEventListener("keydown", unlock);
-      window.removeEventListener("touchstart", unlock);
-    };
-
-    window.addEventListener("click", unlock);
-    window.addEventListener("keydown", unlock);
-    window.addEventListener("touchstart", unlock);
-
     playMusic("intro");
-
-    return () => {
-      window.removeEventListener("click", unlock);
-      window.removeEventListener("keydown", unlock);
-      window.removeEventListener("touchstart", unlock);
-    };
   }, []);
 
   useEffect(() => {
     playMusic(screen);
+
     if (screen === "result") {
       clearTimeout(resultTimerRef.current);
       resultTimerRef.current = setTimeout(() => {
