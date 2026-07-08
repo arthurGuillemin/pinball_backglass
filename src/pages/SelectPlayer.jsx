@@ -214,6 +214,25 @@ export default function SelectPlayer({ onStartGame }) {
           <div className="player-name">PLAYER : {playerName}</div>
         </div>
       )}
+      <div className="select-player-actions">
+        <div className="action-button">
+          <img
+            src="/assets/SelectPlayer/Icon/validate.png"
+            alt="Validate"
+            className="action-icon"
+          />
+        </div>
+
+        {step === "name" && (
+          <div className="action-button">
+            <img
+              src="/assets/SelectPlayer/Icon/return.png"
+              alt="Return"
+              className="action-icon"
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
